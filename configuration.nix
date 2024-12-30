@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-stable, ... }:
 
 {
   imports =
@@ -103,7 +103,7 @@ package = pkgs.i3;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+   vim
    wget
    git
    gcc
@@ -124,7 +124,7 @@ package = pkgs.i3;
    neovim
    alacritty
    #ghostty
-   vivaldi
+   # vivaldi
    telegram-desktop
    xclip  
    fzf
@@ -144,6 +144,12 @@ package = pkgs.i3;
    nixd
    shellcheck
    eza
+   lua-language-server
+    # (import ./emacs.nix { inherit pkgs; })  # Note the relative path
+    (pkgs-stable.vivaldi.override {  # Use pkgs-stable.vivaldi instead
+      proprietaryCodecs = true;
+      enableWidevine = true;
+    })
   ];
 
 
